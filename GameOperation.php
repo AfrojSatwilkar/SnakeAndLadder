@@ -30,10 +30,12 @@ class GameOperation {
                 echo "No Play " . $this->startPosition . " location\n";
                 break;
             case 2 :
+                // Ladder
                 $this->startPosition += $this->diceNumber;
                 echo "Next position " . $this->startPosition;
                 break;
             case 3 :
+                // Snake
                 $this->startPosition -= $this->diceNumber;
                 echo "Position " . $this->startPosition;
                 break;
