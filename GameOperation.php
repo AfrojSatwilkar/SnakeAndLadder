@@ -1,76 +1,77 @@
 <?php
 class GameOperation {
-    private $startPosition;
+    public static $player1_position;
     private $previousPosition;
-    private $count;
+    private $count_player1;
     private $diceNumber;
 
     public function __construct()
     {
-        $this->startPosition = 0;
-        $this->count = 0;
+        self :: $player1_position = 0;
+        $this->count_player1 = 0;
     }
 
     /**
 	 * diceRoll method is used to get random number between 1 to 6
 	 */
     public function diceRoll() {
-        $this->previousPosition = $this->startPosition;
+        $this->previousPosition = self :: $player1_position;
         $this->diceNumber = rand(1,6);
-        $this->count++;
+        $this->count_player1++;
         $this->option();
     }
 
     /**
      * option method is used to get random number betwwen 1 to 3.
-     * call nextMove method and pass this random number.  
+     * call player2Move method and pass this random number.  
      */
     public function option() {
         $option = rand(1,3);
-        $this->nextMove($option);
+        $this->player1Move($option);
     }
 
     /**
      * nextMove method is used to check for option. 
      * @param option
      */
-    public function nextMove($option) {
+    public function player1Move($option) {
         switch ($option) {
             case 1 :
                 // No play
-                echo "No Play " . $this->count . " Moves and ". $this->startPosition . " location\n";
+                echo "Player1 : No Play " . $this->count_player1 . " Moves and ". self :: $player1_position . " location\n";
                 break;
             case 2 :
                 // Ladder
-                $this->startPosition += $this->diceNumber;
+                self :: $player1_position += $this->diceNumber;
 
-                // Player position go above 100 then player stays in the same previous position
-                if ($this->startPosition > 100) {
-                    $this->startPosition -= $this->diceNumber;
+                // Player1 position go above 100 then player1 stays in the same previous position
+                if (self :: $player1_position > 20) {
+                    self :: $player1_position -= $this->diceNumber;
+                    echo "Player1 : " . $this->count_player1 . " Mooves and " . self :: $player1_position . " position\n";
+                } elseif (self :: $player1_position == 20) {
+                    echo "Player1 won with " . $this->count_player1 . " moves.\n";
+                    break;
+
+                } else {
+                    echo "Player1 : " . $this->count_player1 . " Mooves and " . self :: $player1_position . " position\n";
+                    echo "Got ladder player1 play again \n";
+                    $playAgain = readline("Enter 1 for play : ");
+                    if ($playAgain == 1) {
+                        $this->diceRoll();
+                    }
                 }
-                echo $this->count . " Mooves and " . $this->startPosition . " position\n";
-                break;
             case 3 :
                 // Snake
-                $this->startPosition -= $this->diceNumber;
+                self :: $player1_position -= $this->diceNumber;
 
-                // Position moves below 0 then the player restart from 0
-                if ($this->startPosition <= 0) {
-                    $this->startPosition = 0;
+                // Position moves below 0 then the player1 restart from 0
+                if (self :: $player1_position <= 0) {
+                    self :: $player1_position = 0;
                 }
-                echo $this->count . " Moves and " . $this->startPosition . " position\n";
+                echo "Player2 : " . $this->count_player1 . " Moves and " . self :: $player1_position . " position\n";
                 break;
-        }
-
-        // Player position is not equal to 100 then repeat move
-        if ($this->startPosition != 100) {
-            $this->diceRoll();
-        } else {
-            echo "Player won with " . $this->count . " moves.\n";
         }
     }
 }
 
-$game = new GameOperation();
-$game->diceRoll();
 ?>
