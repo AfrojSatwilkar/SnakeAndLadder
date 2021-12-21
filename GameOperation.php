@@ -11,6 +11,9 @@ class GameOperation {
         $this->count = 0;
     }
 
+    /**
+	 * diceRoll method is used to get random number between 1 to 6
+	 */
     public function diceRoll() {
         $this->previousPosition = $this->startPosition;
         $this->diceNumber = rand(1,6);
@@ -32,6 +35,9 @@ class GameOperation {
             case 2 :
                 // Ladder
                 $this->startPosition += $this->diceNumber;
+                if ($this->startPosition > 100) {
+                    $this->startPosition -= $this->diceNumber;
+                }
                 echo "Next position " . $this->startPosition . "\n";
                 break;
             case 3 :
