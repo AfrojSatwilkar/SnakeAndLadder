@@ -32,13 +32,22 @@ class GameOperation {
             case 2 :
                 // Ladder
                 $this->startPosition += $this->diceNumber;
-                echo "Next position " . $this->startPosition;
+                echo "Next position " . $this->startPosition . "\n";
                 break;
             case 3 :
                 // Snake
                 $this->startPosition -= $this->diceNumber;
-                echo "Position " . $this->startPosition;
+                if ($this->startPosition <= 0) {
+                    $this->startPosition = 0;
+                }
+                echo "Position " . $this->startPosition . "\n";
                 break;
+        }
+
+        if ($this->startPosition != 100) {
+            $this->diceRoll();
+        } else {
+            echo "Player won \n";
         }
     }
 }
