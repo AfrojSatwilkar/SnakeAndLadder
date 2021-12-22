@@ -1,5 +1,5 @@
 <?php
-class ComputerPlay {
+class Player2 {
     public static $player2_position;
     private $previousPosition;
     private $count_player2;
